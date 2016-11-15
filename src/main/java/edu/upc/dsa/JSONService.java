@@ -1,15 +1,36 @@
 package edu.upc.dsa;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 @Path("/json")
 public class JSONService {
+
+    protected List<Track> tracks;
+
+    public JSONService() {
+        tracks = new ArrayList<>();
+
+        Track t1 = new Track();
+        t1.setTitle("Enter Sandman");
+        t1.setSinger("Metallica");
+        tracks.add(t1);
+
+        Track t2 = new Track();
+        t2.setTitle("La Barbacoa");
+        t2.setSinger("Georgie Dann");
+        tracks.add(t2);
+    }
+
+    @GET
+    @Path("/got/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Track getTrack(@PathParam("id") int id) {
+        return tracks.get(id);
+    }
 
     @GET
     @Path("/get")
@@ -31,7 +52,6 @@ public class JSONService {
 
         String result = "Track saved : " + track;
         return Response.status(201).entity(result).build();
-
     }
 
 }
