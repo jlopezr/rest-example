@@ -46,6 +46,15 @@ public class JSONService {
     }
 
     @POST
+    @Path("/new")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response newTrack(Track track) {
+        tracks.add(track);
+        // Atencion: siempre añade en la misma posicion por el scope de tracks
+        return Response.status(201).entity("Track added in position "+tracks.size()).build();
+    }
+
+    @POST
     @Path("/post")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTrackInJSON(Track track) {
