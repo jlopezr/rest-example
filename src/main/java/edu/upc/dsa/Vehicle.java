@@ -1,38 +1,20 @@
 package edu.upc.dsa;
 
-//JAXB Inheritance based on https://wiki.eclipse.org/EclipseLink/Examples/MOXy/ObjectGraphs/Metadata
+//Jackson Inheritance based on https://jersey.github.io/documentation/latest/media.html#json.jackson
+// and http://www.baeldung.com/jackson-inheritance
 
-import org.eclipse.persistence.oxm.annotations.XmlNamedAttributeNode;
-import org.eclipse.persistence.oxm.annotations.XmlNamedObjectGraph;
-import org.eclipse.persistence.oxm.annotations.XmlNamedSubgraph;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlSeeAlso;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-@XmlSeeAlso({Car.class, Aircraft.class})
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlNamedObjectGraph(
-        name = "simple",
-        attributeNodes = {
-        },
-        subclassSubgraphs = {
-                @XmlNamedSubgraph(
-                        name = "simple",
-                        type = Car.class,
-                        attributeNodes = {
-                                @XmlNamedAttributeNode("model")
-                        }
-                ),
-                @XmlNamedSubgraph(
-                        name = "simple",
-                        type = Aircraft.class,
-                        attributeNodes = {
-                                @XmlNamedAttributeNode("numberOfPassengers")
-                        }
-                )
-        }
-)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Car.class, name = "car"),
+        @JsonSubTypes.Type(value = Aircraft.class, name = "aircraft")
+})
 public class Vehicle {
     public String id;
 
