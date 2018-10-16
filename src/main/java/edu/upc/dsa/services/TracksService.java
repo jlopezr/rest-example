@@ -1,4 +1,6 @@
-package edu.upc.dsa;
+package edu.upc.dsa.services;
+
+import edu.upc.dsa.Track;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -9,10 +11,12 @@ import java.util.List;
 @Path("/json")
 public class JSONService {
 
-    protected List<Track> tracks;
+    protected static List<Track> tracks = new ArrayList<>();
+
 
     public JSONService() {
-        tracks = new ArrayList<>();
+
+        System.out.println("INIT JSONSERVICE");
 
         Track t1 = new Track();
         t1.setTitle("Enter Sandman");
@@ -23,12 +27,20 @@ public class JSONService {
         t2.setTitle("La Barbacoa");
         t2.setSinger("Georgie Dann");
         tracks.add(t2);
+
     }
 
     @GET
     @Path("/got/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Track getTrack(@PathParam("id") int id) {
+
+        for (Track t: tracks) {
+            System.out.println(t);
+
+        }
+       // return TrackManager.getInstance().getTrack(id);
+
         return tracks.get(id);
     }
 
@@ -49,9 +61,14 @@ public class JSONService {
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTrack(Track track) {
-        tracks.add(track);
+        System.out.println(track);
+
+        //TrackManager.getInstance().addTrack (track);
+
+
+        this.tracks.add(track);
         // Atencion: siempre añade en la misma posicion por el scope de tracks
-        return Response.status(201).entity("Track added in position "+tracks.size()).build();
+        return Response.status(201).entity("Track added in position "+this.tracks.size()).build();
     }
 
     @POST
