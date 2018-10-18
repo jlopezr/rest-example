@@ -35,7 +35,7 @@ public class TracksService {
     @GET
     @ApiOperation(value = "get all Track", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response = Track.class, responseContainer="List"),
     })
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
@@ -51,7 +51,7 @@ public class TracksService {
     @GET
     @ApiOperation(value = "get a Track", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response = Track.class),
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/{id}")
@@ -95,7 +95,7 @@ public class TracksService {
     @POST
     @ApiOperation(value = "create a new Track", notes = "asdasd")
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Successful"),
+            @ApiResponse(code = 201, message = "Successful", response=Track.class),
     })
 
     @Path("/")
