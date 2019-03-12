@@ -31,7 +31,7 @@ public class TextService {
 
     @Path("users/{username}")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getUser(@PathParam("username") String userName) {
         return "Hello " + userName;
     }

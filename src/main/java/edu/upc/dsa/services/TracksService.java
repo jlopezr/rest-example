@@ -1,8 +1,9 @@
 package edu.upc.dsa.services;
 
-import edu.upc.dsa.Track;
+
 import edu.upc.dsa.TracksManager;
 import edu.upc.dsa.TracksManagerImpl;
+import edu.upc.dsa.models.Track;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -56,7 +57,7 @@ public class TracksService {
     })
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getTrack(@PathParam("id") int id) {
+    public Response getTrack(@PathParam("id") String id) {
         Track t = this.tm.getTrack(id);
         if (t == null) return Response.status(404).build();
         else  return Response.status(201).entity(t).build();
@@ -69,7 +70,7 @@ public class TracksService {
             @ApiResponse(code = 404, message = "Track not found")
     })
     @Path("/{id}")
-    public Response deleteTrack(@PathParam("id") int id) {
+    public Response deleteTrack(@PathParam("id") String id) {
         Track t = this.tm.getTrack(id);
         if (t == null) return Response.status(404).build();
         else this.tm.deleteTrack(id);
@@ -84,9 +85,11 @@ public class TracksService {
     })
     @Path("/")
     public Response updateTrack(Track track) {
-        Track t = this.tm.getTrack(track.getId());
+
+        Track t = this.tm.updateTrack(track);
+
         if (t == null) return Response.status(404).build();
-        else this.tm.updateTrack(t);
+
         return Response.status(201).build();
     }
 

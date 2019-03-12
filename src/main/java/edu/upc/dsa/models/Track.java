@@ -1,14 +1,16 @@
-package edu.upc.dsa;
+package edu.upc.dsa.models;
+
+import edu.upc.dsa.util.RandomUtils;
 
 public class Track {
 
-    int id;
+    String id;
     String title;
     String singer;
     static int lastId;
 
     public Track() {
-        this.setId(lastId++);
+        this.id = RandomUtils.getId();
     }
 
     public Track(String title, String singer) {
@@ -17,11 +19,11 @@ public class Track {
         this.setTitle(title);
     }
 
-    public int getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id=id;
     }
 
@@ -44,7 +46,7 @@ public class Track {
 
     @Override
     public String toString() {
-        return "Track [title=" + title + ", singer=" + singer +"]";
+        return "Track [id="+id+", title=" + title + ", singer=" + singer +"]";
     }
 
 }
