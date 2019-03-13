@@ -99,11 +99,15 @@ public class TracksService {
     @ApiOperation(value = "create a new Track", notes = "asdasd")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Successful", response=Track.class),
+            @ApiResponse(code = 500, message = "Validation Error")
+
     })
 
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response newTrack(Track track) {
+
+        if (track.getSinger()==null || track.getTitle()==null)  return Response.status(500).entity(track).build();
         this.tm.addTrack(track);
         return Response.status(201).entity(track).build();
     }
